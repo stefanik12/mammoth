@@ -11,9 +11,11 @@ In the [Quickstart tutorial](quickstart), we assume that you will download and p
 [Europarl parallel corpus](https://www.statmt.org/europarl/) is a multilingual resource extracted from European Parliament proceedings and contains texts in 21 European languages. Download the Release v7 - a further expanded and improved version of the Europarl corpus on 15 May 2012 - from the original website or 
 download the processed data by us:
 ```bash
-wget https://mammoth101.a3s.fi/europarl.tar.gz
+# Europarl for three languages: bg, cs, en
+wget https://mammoth101.a3s.fi/europarl-3langs.tar.gz
+# Europarl with all other languages is also available on https://mammoth101.a3s.fi/europarl.tar.gz
 mkdir europarl_data
-tar –xvzf europarl.tar.gz -C europarl_data
+tar -xvzf europarl-3langs.tar.gz -C europarl_data
 ```
 Note that the extracted dataset will require around 30GB of memory. Alternatively, you can only download the data for the three example languages (666M).
 ```bash
@@ -45,6 +47,10 @@ Here's a high-level summary of the main processing steps. For each language in '
 
 You're free to skip this step if you directly download the processed data.
 
+```shell
+python
+```
+In python console, run:
 ```python
 import random
 import pathlib
@@ -57,7 +63,7 @@ langs = ["bg", "cs"]
 sp_path = 'vocab/opusTC.mul.64k.spm'
 spm = sp.SentencePieceProcessor(model_file=sp_path)
 
-input_dir = 'europarl_data/europarl'
+input_dir = 'europarl_data'
 output_dir = 'europarl_data/encoded'
 
 for lang in tqdm.tqdm(langs):
