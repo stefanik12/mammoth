@@ -204,7 +204,7 @@ You can start your training on a single machine, by simply running a python scri
 Note that the example config above assumes two GPUs available on one machine.
 
 ```shell
-CUDA_VISIBLE_DEVICES=0,1 python3 train.py -config my_config.yaml -save_model output_dir -tensorboard -tensorboard_log_dir log_dir
+CUDA_VISIBLE_DEVICES=0,1 mammoth_train -config my_config.yaml -save_model output_dir -tensorboard -tensorboard_log_dir log_dir -node_rank 0
 ```
 
 Note that when running `train.py`, you can use all the parameters from [train.py](options/train) as cmd arguments. In the case of duplicate arguments, the cmd parameters override the ones found in your config.yaml.
