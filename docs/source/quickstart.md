@@ -213,17 +213,35 @@ Note that when running `train.py`, you can use all the parameters from [train.py
 
 ### Step 4: Translate
 
-Now that you have successfully trained your multilingual machine translation model using Mammoth, it's time to put it to use for translation. 
+Now that you have successfully trained your multilingual machine translation model using Mammoth, it's time to put it to use for translation.
+
+You can test the translation interface with our Mammoth-trained model with a shared encoder and lang-specific decoders, as created in [this tutorial](examples/sharing_schemes.md).
+Download the model as follows:
+```bash
+wget https://mammoth-share.a3s.fi/encoder-shared-models.tar.gz
+tar -xvzf encoder-shared-models.tar.gz
+```
+Then, download the config YAMLs that were used for training this model:
+```bash
+wget https://mammoth-share.a3s.fi/configs.tar.gz
+tar -xvzf configs.tar.gz
+```
+Now for prediction, you can choose one of the configs from `./configs` directory.
+In the example below, we pick the `encoder-shared` one.
+
+[TODO: configs do not run out-of-box -- minimise them, include them directly here and re-run.]
+
+Finally, run the prediction with the model:
 
 ```bash
-python3 -u $MAMMOTH/translate.py \
-  --config "my_config.yml" \
-  --model "$model_checkpoint" \
-  --task_id  "train_$src_lang-$tgt_lang" \
-  --src "$path_to_src_language/$lang_pair.$src_lang.sp" \
-  --output "$out_path/$src_lang-$tgt_lang.hyp.sp" \
-  --gpu 0 --shard_size 0 \
-  --batch_size 512
+mammoth_translate \
+      --config configs/encoder-shared/config.yaml \
+      --model encoder-shared-models/model_step_15000 \
+      --task_id  train_bg-en \
+      --src europarl_data/bg-en/valid.bg-en.bg.sp \
+      --output translations/bg-en.sp \
+      --gpu 0 --shard_size 0 \
+      --batch_size 512
 ```
 
 Follow these configs to translate text with your trained model.
